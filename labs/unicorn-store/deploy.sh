@@ -3,7 +3,7 @@
 app=$1
 build=$2
 
-if [ $app == "spring" ]
+if [ $app == "spring-aws" ]
 then
   if [[ $build == "--build" ]]
   then

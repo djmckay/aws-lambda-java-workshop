@@ -24,7 +24,7 @@ The following script will build the infrastructure stack via AWS CDK.
 ./setup-infrastructure.sh
 ```
 
-To deploy the different applications use:
+To deploy the locally:
 
 ```bash
 ./mvnw -f software/unicorn-store-spring/pom.xml spring-boot:run
