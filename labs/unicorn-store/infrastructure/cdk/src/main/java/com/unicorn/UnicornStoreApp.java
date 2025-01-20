@@ -3,9 +3,6 @@ package com.unicorn;
 import java.util.List;
 
 import com.unicorn.alternatives.UnicornAuditService;
-import com.unicorn.alternatives.UnicornStoreMicronaut;
-import com.unicorn.alternatives.UnicornStoreQuarkus;
-import com.unicorn.alternatives.UnicornStoreSpringGraalVM;
 import com.unicorn.core.InfrastructureStack;
 
 import io.github.cdklabs.cdknag.AwsSolutionsChecks;
@@ -24,15 +21,6 @@ public class UnicornStoreApp {
                 .build());
 
         var unicornStoreSpring = new UnicornStoreStack(app, "UnicornStoreSpringApp", StackProps.builder()
-                .build(), infrastructureStack);
-
-        var unicornStoreMicronaut = new UnicornStoreMicronaut(app, "UnicornStoreMicronautApp", StackProps.builder()
-                .build(), infrastructureStack);
-
-        var unicornStoreSpringGraalVM = new UnicornStoreSpringGraalVM(app, "UnicornStoreSpringGraalVMApp", StackProps.builder()
-                .build(), infrastructureStack);
-
-        var unicornStoreQuarkus = new UnicornStoreQuarkus(app, "UnicornStoreQuarkusApp", StackProps.builder()
                 .build(), infrastructureStack);
 
         var unicornAuditService = new UnicornAuditService(app, "UnicornAuditServiceApp", StackProps.builder()
@@ -64,9 +52,6 @@ public class UnicornStoreApp {
 
         NagSuppressions.addStackSuppressions(infrastructureStack, suppression);
         NagSuppressions.addStackSuppressions(unicornStoreSpring, suppression);
-        NagSuppressions.addStackSuppressions(unicornStoreMicronaut, suppression);
-        NagSuppressions.addStackSuppressions(unicornStoreSpringGraalVM, suppression);
-        NagSuppressions.addStackSuppressions(unicornStoreQuarkus, suppression);
         NagSuppressions.addStackSuppressions(unicornAuditService, suppression);
 
         app.synth();

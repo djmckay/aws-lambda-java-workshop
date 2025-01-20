@@ -14,6 +14,7 @@ import software.amazon.awssdk.services.eventbridge.model.EventBridgeException;
 import software.amazon.awssdk.services.eventbridge.model.ListEventBusesRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequest;
 import software.amazon.awssdk.services.eventbridge.model.PutEventsRequestEntry;
+import java.util.concurrent.TimeUnit;
 
 import java.util.concurrent.ExecutionException;
 
@@ -29,7 +30,7 @@ public class UnicornPublisher {
 
     public UnicornPublisher(ObjectMapper objectMapper) {
         try {
-            eventBridgeClient.listEventBuses(ListEventBusesRequest.builder().build()).get();
+            eventBridgeClient.listEventBuses(ListEventBusesRequest.builder().build()).get(100, TimeUnit.MILLISECONDS);
         } catch (Exception e) {
             //Ignore
         }
