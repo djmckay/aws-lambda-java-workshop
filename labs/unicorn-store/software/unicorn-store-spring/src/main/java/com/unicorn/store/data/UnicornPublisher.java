@@ -53,7 +53,7 @@ public class UnicornPublisher {
     private PutEventsRequest createEventRequestEntry(UnicornEventType unicornEventType, String unicornJson) {
         var entry = PutEventsRequestEntry.builder()
                 .source("com.unicorn.store")
-                .eventBusName("unicorns")
+                .eventBusName("unicorn-events")
                 .detailType(unicornEventType.name())
                 .detail(unicornJson)
                 .build();
