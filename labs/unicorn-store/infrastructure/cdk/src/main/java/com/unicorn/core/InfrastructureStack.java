@@ -5,6 +5,10 @@ import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.ec2.*;
 import software.amazon.awscdk.services.ec2.InstanceType;
 import software.amazon.awscdk.services.events.EventBus;
+import software.amazon.awscdk.services.events.EventPattern;
+import software.amazon.awscdk.services.events.Rule;
+import software.amazon.awscdk.services.events.targets.CloudWatchLogGroup;
+import software.amazon.awscdk.services.logs.LogGroup;
 import software.amazon.awscdk.services.rds.*;
 import software.constructs.Construct;
 
@@ -36,6 +40,21 @@ public class InfrastructureStack extends Stack {
         createEventBridgeVpcEndpoint();
         createDynamoDBVpcEndpoint();
         new DatabaseSetupConstruct(this, "UnicornDatabaseConstruct");
+
+        createCloudWatchRule();
+    }
+
+    private void createCloudWatchRule() {
+        var rule = Rule.Builder.create(this, "EventBridgeRuleAudit")
+                .ruleName("audit-service-rule")
+                .eventBus(this.getEventBridge())
+                .eventPattern(EventPattern.builder().source(List.of("com.unicorn.store")).build())
+                .build();
+
+        rule.addTarget(new CloudWatchLogGroup(LogGroup.Builder.create(this, "audit-service-log-group")
+                .logGroupName("audit-service-log-group")
+                .removalPolicy(RemovalPolicy.DESTROY)
+                .build()));
     }
 
 
@@ -56,11 +75,6 @@ public class InfrastructureStack extends Stack {
                 Peer.ipv4("10.0.0.0/16"),
                 Port.tcp(5432),
                 "Allow Database Traffic from local network");
-
-        databaseSecurityGroup.addIngressRule(
-                Peer.ipv4("192.168.0.0/16"),
-                Port.tcp(5432),
-                "Allow Database Traffic from IDE network");
 
         return databaseSecurityGroup;
     }
