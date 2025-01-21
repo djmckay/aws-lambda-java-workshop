@@ -13,7 +13,20 @@ then
     "size": "Very big"
 }' | jq
 
+  status=$(curl --location --request GET $(cat infrastructure/cdk/target/output.json | jq -r '.UnicornStoreSpringApp.ApiEndpointSpring')'/unicorns' \
+| jq -r '.name')
+if [ $status != null ]
+then
+  echo $status
+  curl --location --request GET $(cat infrastructure/cdk/target/output.json | jq -r '.UnicornStoreSpringApp.ApiEndpointSpring')'/unicorns' \
+  | jq
+  echo "Test Passed"
   exit 0
+else
+  echo "Test Failed"
+  exit 1
+fi
+
 fi
 
 if [ $app == "spring-local" ]
@@ -27,7 +40,20 @@ then
     "size": "Very big"
 }' | jq
 
+  status=$(curl --location --request GET 'http://localhost:8080/unicorns/' \
+| jq -r '.name')
+
+if [ $status == null ]
+then
+  curl --location --request GET 'http://localhost:8080/unicorns' \
+  | jq
+    echo "Test Passed"
   exit 0
+else
+  echo "Test Failed"
+  exit 1
+fi
+
 fi
 
 
