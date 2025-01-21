@@ -8,7 +8,7 @@
 ./mvnw clean package -f infrastructure/db-setup/pom.xml
 
 # Build the unicorn application
-./mvnw clean package -f software/unicorn-store-spring/pom.xml
+./mvnw clean package -P local -f software/unicorn-store-spring/pom.xml
 
 # Deploy the infrastructure
 cd infrastructure/cdk
