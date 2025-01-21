@@ -1,4 +1,4 @@
-# From Serverful to Serverless Java with AWS Lambda
+# Java with AWS Challenge
 
 # Pre-Requisites
 
@@ -24,7 +24,7 @@ The following script will build the infrastructure stack via AWS CDK.
 ./setup-infrastructure.sh
 ```
 
-To deploy locally:
+To deploy locally as a spring boot application:
 
 ```bash
 ./deploy.sh spring-local --build
@@ -52,6 +52,18 @@ Stack deletion could take 10 minutes or more due to a safe Network Interface del
 
 You can exit the current terminal and deletion will still continue.
 
+## Your Tasks
+Welcome to the Unicorn Store development team!  
+
+We just fired the entire dev team that built the application and getting numerous requests from users.  
+
+Here is a list of tickets for you:
+
+1. Feature Request : as a user, I would like to view all Unicorns in the store.  Acceptance criteria in test-app.sh.
+2. Bug : Urgent issue!  No events are being received by the fulfilment team and other down line processes.  We need the events fixed asap. Acceptance criteria: The events should be found in the CloudWatch audit-service-log-group logs.
+3. Backlog Nonfunctional requirement : Dev team is having issues testing locally.
+4. Feature Request: as the store manager, I would like to receive an email when a unicorn is deleted.
+5. Bug
 ## Security
 The project uses [CDK-Nag](https://github.com/cdklabs/cdk-nag) to identify issues with the environment configuration. Since this is workshop environment we are
 not using all the capabilities that you might need in production (E.g. Multi-AZ setup). Please refer to the CDK-Nag suppressions in the [CDK-App](infrastructure/cdk/src/main/java/com/unicorn/UnicornStoreApp.java) to identify certain choices
