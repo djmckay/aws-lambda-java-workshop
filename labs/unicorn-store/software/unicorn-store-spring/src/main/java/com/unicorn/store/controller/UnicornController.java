@@ -69,4 +69,6 @@ public class UnicornController {
             throw new ResponseStatusException(NOT_FOUND, errorMsg, e);
         }
     }
+
+    //todo: add endpoint for all unicorns
 }

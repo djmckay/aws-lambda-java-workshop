@@ -8,9 +8,7 @@ import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 import software.amazon.awscdk.services.apigateway.RestApi;
-import software.amazon.awscdk.services.lambda.Alias;
-import software.amazon.awscdk.services.lambda.Code;
-import software.amazon.awscdk.services.lambda.Function;
+import software.amazon.awscdk.services.lambda.*;
 import software.amazon.awscdk.services.lambda.Runtime;
 import software.constructs.Construct;
 
@@ -72,6 +70,7 @@ public class UnicornStoreStack extends Stack {
                     "SPRING_DATASOURCE_HIKARI_maximumPoolSize", "1",
                     "AWS_SERVERLESS_JAVA_CONTAINER_INIT_GRACE_TIME", "500"
                 ))
+                .snapStart(SnapStartConf.ON_PUBLISHED_VERSIONS)
                 .build();
 
         // Create an alias for the latest version

@@ -2,7 +2,6 @@ package com.unicorn;
 
 import java.util.List;
 
-import com.unicorn.alternatives.UnicornAuditService;
 import com.unicorn.core.InfrastructureStack;
 
 import io.github.cdklabs.cdknag.AwsSolutionsChecks;
@@ -22,10 +21,6 @@ public class UnicornStoreApp {
 
         var unicornStoreSpring = new UnicornStoreStack(app, "UnicornStoreSpringApp", StackProps.builder()
                 .build(), infrastructureStack);
-
-        var unicornAuditService = new UnicornAuditService(app, "UnicornAuditServiceApp", StackProps.builder()
-                .build(), infrastructureStack);
-
 
         //Add CDK-NAG checks: https://github.com/cdklabs/cdk-nag
         //Add suppression to exclude certain findings that are not needed for Workshop environment
@@ -52,7 +47,6 @@ public class UnicornStoreApp {
 
         NagSuppressions.addStackSuppressions(infrastructureStack, suppression);
         NagSuppressions.addStackSuppressions(unicornStoreSpring, suppression);
-        NagSuppressions.addStackSuppressions(unicornAuditService, suppression);
 
         app.synth();
     }

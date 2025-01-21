@@ -44,12 +44,16 @@ if [ $app == "spring-aws" ]
 then
   if [[ $build == "--build" ]]
   then
+    # Build the database setup function
+    ./mvnw clean package -f infrastructure/db-setup/pom.xml
+
     ./mvnw clean package -P aws -f software/unicorn-store-spring/pom.xml
   fi
   cd infrastructure/cdk
   cdk deploy UnicornStoreSpringApp --outputs-file target/output.json --require-approval never
 
   # Execute the DB Setup function to create the table
+    echo "Invoke db setup function lambda to create the table"
     lambda_result=$(aws lambda invoke --function-name $(cat target/output.json | jq -r '.UnicornStoreInfrastructure.DbSetupArn') /dev/stdout 2>&1)
     # Extract the status code from the response payload
     lambda_status_code=$(echo "$lambda_result" | jq 'first(.. | objects | select(has("statusCode"))) | .statusCode')
